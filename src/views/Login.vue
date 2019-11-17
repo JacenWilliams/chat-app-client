@@ -7,7 +7,7 @@
             <v-toolbar-title>Enter Name</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form submit.prevent="submit">
+            <v-form @submit.prevent="submit">
               <v-text-field v-model="name" label="Name" required></v-text-field>
             </v-form>
           </v-card-text>
@@ -17,7 +17,6 @@
         </v-card>
       </v-col>
     </v-row>
-    
   </v-container>
 </template>
 
@@ -32,17 +31,17 @@ export default {
     dialog: false
   }),
 
-
   mounted() {
-    console.log("Mounting...")
-    this.importAll(require.context('../assets/avatars/', true, /\.png$/));
+    console.log("Mounting...");
+    this.importAll(require.context("../assets/avatars/", true, /\.png$/));
   },
 
   methods: {
-
     importAll(r) {
-      console.log(r)
-      r.keys().forEach(key => (this.images.push({ pathLong: r(key), pathShort: key })));
+      console.log(r);
+      r.keys().forEach(key =>
+        this.images.push({ pathLong: r(key), pathShort: key })
+      );
     },
 
     submit() {
@@ -50,8 +49,7 @@ export default {
         this.$store.state.name = this.name;
         this.$router.push("/chat");
       }
-    },
-
+    }
   }
 };
 </script>
