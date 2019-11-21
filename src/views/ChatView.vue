@@ -69,6 +69,7 @@ export default {
       let id = Math.max(...this.allchat.map(x => x.id), 0) + 1;
 
       this.$socket.emit("message", JSON.stringify({ id, text, time, name }));
+      this.message = "";
     }
   }
 };
