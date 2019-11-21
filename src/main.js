@@ -3,21 +3,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import VueNativeSock from "vue-native-websocket";
+import VueSocketio from 'vue-socket.io';
 import VueChatScroll from "vue-chat-scroll";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 Vue.config.productionTip = false;
 
-Vue.use(VueNativeSock, "ws://localhost:9090", {
-    store: store,
-    format: "json",
-    reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 3000
-});
-
+try {
+    Vue.use(new VueSocketio({ connection: 'https://young-cove-83960.herokuapp.com/', debug: true }));
+} catch (ex) {
+    console.log(ex);
+}
 Vue.use(VueChatScroll);
 
 new Vue({
