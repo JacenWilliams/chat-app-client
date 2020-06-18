@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark >
-      <v-toolbar-title>FireSpin</v-toolbar-title>
+    <v-app-bar app color="primary" dark>
+      <v-toolbar-title>ChatApp</v-toolbar-title>
       <div class="d-flex align-center"></div>
     </v-app-bar>
     <v-content>
@@ -14,8 +14,13 @@
           <a
             href="https://www.flaticon.com/authors/roundicons-freebies"
             title="Roundicons Freebies"
-          >Roundicons Freebies</a> from
-          <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+          >
+            Roundicons Freebies
+          </a>
+          from
+          <a href="https://www.flaticon.com/" title="Flaticon">
+            www.flaticon.com
+          </a>
         </div>
       </v-col>
     </v-footer>
@@ -30,6 +35,6 @@ export default {
 
   data: () => ({
     //
-  })
+  }),
 };
 </script>

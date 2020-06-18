@@ -18,7 +18,6 @@ export default new Vuex.Store({
 
     getters: {
         allChat: state => state.chats.sort((a, b) => a - b),
-
     },
 
 

@@ -12,7 +12,9 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="submit" align="right" justify="right" color="primary">Enter Chat</v-btn>
+            <v-btn @click="submit" align="right" justify="right" color="primary"
+              >Enter Chat</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
@@ -28,18 +30,16 @@ export default {
     name: "",
     images: [],
     avatar: "",
-    dialog: false
+    dialog: false,
   }),
 
   mounted() {
-    console.log("Mounting...");
     this.importAll(require.context("../assets/avatars/", true, /\.png$/));
   },
 
   methods: {
     importAll(r) {
-      console.log(r);
-      r.keys().forEach(key =>
+      r.keys().forEach((key) =>
         this.images.push({ pathLong: r(key), pathShort: key })
       );
     },
@@ -49,7 +49,7 @@ export default {
         this.$store.state.name = this.name;
         this.$router.push("/chat");
       }
-    }
-  }
+    },
+  },
 };
 </script>

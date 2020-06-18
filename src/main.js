@@ -11,7 +11,7 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 Vue.config.productionTip = false;
 
 try {
-    Vue.use(new VueSocketio({ connection: 'https://young-cove-83960.herokuapp.com/', debug: true }));
+    Vue.use(new VueSocketio({ connection: 'http://localhost:3000', debug: true }));
 } catch (ex) {
     console.log(ex);
 }
