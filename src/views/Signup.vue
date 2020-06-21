@@ -12,11 +12,13 @@
                 v-model="username"
                 label="Username"
                 required
+                @keydown.enter="submit"
               ></v-text-field>
               <v-text-field
                 v-model="password"
                 label="Password"
                 type="password"
+                @keydown.enter="submit"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -70,7 +72,6 @@ export default {
 
     async submit() {
       try {
-        console.log(`Submit ${this.username} ${this.password}`);
         await this.signup({ username: this.username, password: this.password });
         this.checkLogin();
       } catch (error) {
