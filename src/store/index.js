@@ -28,6 +28,10 @@ export default new Vuex.Store({
             }
 
             return false;
+        },
+
+        username(state) {
+            return state.username;
         }
     },
 
@@ -42,6 +46,9 @@ export default new Vuex.Store({
 
         initializeLogin(state) {
             let userData = JSON.parse(localStorage.getItem('userData'));
+
+            console.log("Initialize login:");
+            console.log(JSON.stringify(userData));
 
             if (userData && userData.username && userData.userId && userData.token) {
                 state.username = userData.username;

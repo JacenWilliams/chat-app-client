@@ -4,7 +4,19 @@
       <v-toolbar-title>ChatApp</v-toolbar-title>
       <div class="d-flex"></div>
       <v-spacer></v-spacer>
-      <v-btn v-if="loggedIn" text small color="secondary" @click="performLogout">Logout</v-btn>
+      <v-menu offset-y bottom v-if="loggedIn">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text v-bind="attrs" v-on="on">
+            {{username}}
+            <v-icon>arrow_drop_down</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item @click="performLogout">
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-content>
       <router-view></router-view>
@@ -27,7 +39,7 @@ export default {
   components: {},
 
   computed: {
-    ...mapGetters(["loggedIn"])
+    ...mapGetters(["loggedIn", "username"])
   },
 
   methods: {

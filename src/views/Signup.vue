@@ -8,18 +8,25 @@
           </v-toolbar>
           <v-card-text>
             <v-form @submit.prevent="submit">
-              <v-text-field v-model="username" label="Username" required @keydown.enter="submit"></v-text-field>
+              <v-text-field
+                v-model="username"
+                label="Username"
+                required
+                @keydown.enter="submit"
+                @keypress="error = false"
+              ></v-text-field>
               <v-text-field
                 v-model="password"
                 label="Password"
                 type="password"
                 @keydown.enter="submit"
+                @keypress="error = false"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-btn @click="submit" align="right" justify="right" color="primary">Sign Up</v-btn>
-            <v-btn @click="login" align="right" justify="right" color="secondary">Login</v-btn>
+            <v-btn @click="login" align="right" justify="right" text>Login</v-btn>
           </v-card-actions>
           <v-alert
             class="justify-center"
@@ -29,7 +36,7 @@
             type="error"
             dismissible
             close-text="Dismiss"
-          >Username already in use!</v-alert>
+          >{{errorMessage}}</v-alert>
         </v-card>
       </v-col>
     </v-row>
@@ -50,6 +57,7 @@ export default {
     show: false,
     dialog: false,
     error: false,
+    errorMessage: "",
     rules: {
       required: value => !!value || "Required.",
       min: v => v.length >= 8 || "Min 8 characters"
@@ -70,9 +78,22 @@ export default {
 
     async submit() {
       try {
+        if (!this.username) {
+          this.errorMessage = "Username is required!";
+          this.error = true;
+          return;
+        }
+
+        if (!this.password) {
+          this.errorMessage = "Password is required!";
+          this.error = true;
+          return;
+        }
+
         await this.signup({ username: this.username, password: this.password });
         if (!this.checkLogin()) this.error = true;
       } catch (error) {
+        this.errorMessage = "Username already exists!";
         this.error = true;
         console.log(error.stack);
       }

@@ -19,7 +19,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn @click="submit" align="right" justify="right" color="primary">Sign In</v-btn>
-            <v-btn @click="signup" align="right" justify="right" color="secondary">Sign Up</v-btn>
+            <v-btn @click="signup" align="right" justify="right" text>Sign Up</v-btn>
           </v-card-actions>
           <v-alert
             class="justify-center"
@@ -60,7 +60,7 @@ export default {
     ...mapGetters(["loggedIn"])
   },
 
-  afterMount() {
+  mounted() {
     console.log("Mounted");
     this.initializeLogin();
     this.checkLogin();
