@@ -8,13 +8,29 @@
           </v-toolbar>
           <v-card-text>
             <v-form @submit.prevent="submit">
-              <v-text-field v-model="username" label="Username" required></v-text-field>
-              <v-text-field v-model="password" label="Password" type="password"></v-text-field>
+              <v-text-field
+                v-model="username"
+                label="Username"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="submit" align="right" justify="right" color="primary">Sign In</v-btn>
-            <v-btn @click="signup" align="right" justify="right" color="secondary">Sign Up</v-btn>
+            <v-btn @click="submit" align="right" justify="right" color="primary"
+              >Sign In</v-btn
+            >
+            <v-btn
+              @click="signup"
+              align="right"
+              justify="right"
+              color="secondary"
+              >Sign Up</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
@@ -36,13 +52,13 @@ export default {
     show: false,
     dialog: false,
     rules: {
-      required: value => !!value || "Required.",
-      min: v => v.length >= 4 || "Min 8 characters"
-    }
+      required: (value) => !!value || "Required.",
+      min: (v) => v.length >= 4 || "Min 8 characters",
+    },
   }),
 
   computed: {
-    ...mapGetters(["loggedIn"])
+    ...mapGetters(["loggedIn"]),
   },
 
   afterMount() {
@@ -72,7 +88,7 @@ export default {
 
     async signup() {
       this.$router.push("/signup");
-    }
-  }
+    },
+  },
 };
 </script>
