@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex justify-start mb-3 chat">
-    <v-card class="px-3 ma-3 speech-bubble" color="primary" dark>
-      <div class="overline mb-4">
-        {{ chat.username }} - {{ new Date(chat.timeStamp).toTimeString() }}
-      </div>
-      <v-card-text>{{ chat.message }}</v-card-text>
+  <div class="d-flex mb-3 chat">
+    <v-card class="pa-2 ma-2 speech-bubble" color="primary" dark>
+      <div class="mb-1 caption">{{ chat.username }} - {{ getDate(chat.postedTimeStamp)}}</div>
+      <v-card-text class="pa-1 ma-1">
+        <div class="text--primary">{{ chat.message }}</div>
+      </v-card-text>
     </v-card>
   </div>
 </template>
@@ -12,6 +12,16 @@
 <script>
 export default {
   props: ["chat"],
+
+  methods: {
+    getDate(datestring) {
+      let date = new Date(datestring);
+      let localDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60 * 1000
+      );
+      return localDate.toLocaleTimeString();
+    }
+  }
 };
 </script>
 
@@ -22,5 +32,9 @@ v-card {
 
 .speech-bubble {
   max-width: 80%;
+}
+
+.chat {
+  align-content: flex-start;
 }
 </style>

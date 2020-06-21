@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-container">
+  <div class="chat-container justify-center align-center">
     <OwnedChat :class="chat" v-if="owned" :chat="this.chat"></OwnedChat>
     <OtherChat :class="chat" v-else :chat="this.chat"></OtherChat>
   </div>
@@ -14,19 +14,19 @@ export default {
 
   components: {
     OwnedChat,
-    OtherChat,
+    OtherChat
   },
 
   computed: {
     owned: function() {
-      return this.$store.state.username === this.chat.username;
-    },
-  },
+      return this.$store.state.userId === this.chat.userId;
+    }
+  }
 };
 </script>
 
 <style scoped>
 .chat-container {
-  width: 100%;
+  justify-self: center;
 }
 </style>

@@ -41,7 +41,7 @@ export default new Vuex.Store({
         },
 
         initializeLogin(state) {
-            let userData = localStorage.getItem('userData');
+            let userData = JSON.parse(localStorage.getItem('userData'));
 
             if (userData && userData.username && userData.userId && userData.token) {
                 state.username = userData.username;
@@ -65,24 +65,19 @@ export default new Vuex.Store({
         initializeChats(state, chats) {
             state.chats = chats;
         },
+
+        SOCKET_CONNECT(state, data) {
+        }
     },
 
     actions: {
         async sendChat({ commit }, data) {
-            console.log("Sending chat: ");
-            console.log(data);
             this._vm.$socket.client.emit('message', data);
         },
 
         async login({ commit, dispatch }, data) {
-            console.log("Logging in with credentials: ");
-            console.log(JSON.stringify(data));
-
             var response = await axios.post(process.env.VUE_APP_API_HOST + "/users/login", data);
             var user = response.data;
-
-            console.log("API login results:");
-            console.log(JSON.stringify(user));
 
             if (user) {
                 commit('setLogin', user);
@@ -95,13 +90,26 @@ export default new Vuex.Store({
             dispatch('disconnectFromSocket');
         },
 
+        async signup({ commit, dispatch }, data) {
+            let response = await axios.post(process.env.VUE_APP_API_HOST + "/users/signup", data);
+            let user = response.data;
+
+            if (user && user.token) {
+                commit('setLogin', user);
+                dispatch('connectToSocket', user.token);
+                return true;
+            }
+
+            return false;
+        },
+
         async disconnectFromSocket({ commit }) {
-            this._vm.$socket.io.opts.query = {};
+            this._vm.$socket.client.io.opts.query = {};
             this._vm.$socket.client.close();
         },
 
         async connectToSocket({ commit }, token) {
-            this._vm.$socket.query = { token };
+            this._vm.$socket.client.io.opts.query = { token };
             this._vm.$socket.client.open();
         },
 
