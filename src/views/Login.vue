@@ -4,11 +4,25 @@
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-6" px="4">
           <v-toolbar color="primary" dark>
-            <v-toolbar-title>Enter Name</v-toolbar-title>
+            <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form @submit.prevent="submit">
-              <v-text-field v-model="name" label="Name" required></v-text-field>
+              <v-text-field
+                v-model="username"
+                label="Username"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                hint="Must be at least 8 characters. Must contain at least one number."
+                counter
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show ? 'text' : 'password'"
+                :rules="[rules.required, rules.min]"
+                @click:append="show = !show"
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -23,31 +37,50 @@
 </template>
 
 <script>
+import { mapGetters, getActions, mapActions, mapMutations } from "vuex";
+
 export default {
   name: "login",
 
   data: () => ({
-    name: "",
+    username: "",
+    password: "",
     images: [],
     avatar: "",
+    show: false,
     dialog: false,
+    rules: {
+      required: (value) => !!value || "Required.",
+      min: (v) => v.length >= 4 || "Min 8 characters",
+    },
   }),
 
-  mounted() {
-    this.importAll(require.context("../assets/avatars/", true, /\.png$/));
+  computed: {
+    ...mapGetters(["loggedIn"]),
+  },
+
+  afterMount() {
+    console.log("Mounted");
+    this.initializeLogin();
+    this.checkLogin();
   },
 
   methods: {
-    importAll(r) {
-      r.keys().forEach((key) =>
-        this.images.push({ pathLong: r(key), pathShort: key })
-      );
+    ...mapMutations(["initializeLogin"]),
+
+    ...mapActions(["login"]),
+
+    checkLogin() {
+      if (this.loggedIn) this.$router.push("/chat");
     },
 
-    submit() {
-      if (this.name) {
-        this.$store.state.name = this.name;
-        this.$router.push("/chat");
+    async submit() {
+      try {
+        console.log(`Submit ${this.username} ${this.password}`);
+        await this.login({ username: this.username, password: this.password });
+        this.checkLogin();
+      } catch (error) {
+        console.log(error.stack);
       }
     },
   },

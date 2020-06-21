@@ -14,14 +14,14 @@ export default {
 
   components: {
     OwnedChat,
-    OtherChat
+    OtherChat,
   },
 
   computed: {
     owned: function() {
-      return this.$store.state.name === this.chat.name;
-    }
-  }
+      return this.$store.state.username === this.chat.username;
+    },
+  },
 };
 </script>
 

@@ -6,7 +6,7 @@
   >
     <div ref="chats" class="chats">
       <Chat
-        v-for="chat in allchat"
+        v-for="chat in allChat"
         :key="chat.id"
         :chat="chat"
         :class="`index-${chat.id}`"
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters, getActions, mapActions } from "vuex";
+import { mapGetters, getActions, mapActions, mapMutations } from "vuex";
 import Chat from "./Chat";
 
 export default {
@@ -41,9 +41,7 @@ export default {
   },
 
   computed: {
-    allchat() {
-      return this.$store.state.chats;
-    },
+    ...mapGetters(["allChat", "loggedIn"]),
   },
 
   updated() {
@@ -51,21 +49,9 @@ export default {
   },
 
   beforeMount() {
-    if (!this.$store.state.name) {
+    if (!this.loggedIn) {
       this.$router.push("/");
     }
-  },
-
-  sockets: {
-    connect() {
-      this.$store.state.socket.isConnected = true;
-      console.log("Websocket connected!");
-    },
-
-    message: function(data) {
-      console.log("received data: " + data);
-      this.$store.state.chats.push(JSON.parse(data));
-    },
   },
 
   methods: {
@@ -73,13 +59,8 @@ export default {
 
     send: function() {
       let text = this.message;
-      let time = Date.now();
-      let name = this.$store.state.name;
-      let id = Math.max(...this.allchat.map((x) => x.id), 0) + 1;
-
       if (!text) return;
-
-      this.$socket.emit("message", JSON.stringify({ id, text, time, name }));
+      this.sendChat(text);
       this.message = "";
     },
   },

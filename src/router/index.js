@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login";
 import ChatView from "../views/ChatView";
-import store from "../store";
 
 Vue.use(VueRouter);
 
