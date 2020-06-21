@@ -11,7 +11,7 @@
     <v-footer class="text-form mt-7" fixed>
       <v-form class="text-form" @submit.prevent="send">
         <v-container fluid>
-          <v-text-field v-model="message" filled clearable label="Message">
+          <v-text-field v-model="message" filled clearable label="Message" required>
             <template v-slot:append-outer>
               <v-icon @click="send">send</v-icon>
             </template>
