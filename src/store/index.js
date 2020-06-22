@@ -47,9 +47,6 @@ export default new Vuex.Store({
         initializeLogin(state) {
             let userData = JSON.parse(localStorage.getItem('userData'));
 
-            console.log("Initialize login:");
-            console.log(JSON.stringify(userData));
-
             if (userData && userData.username && userData.userId && userData.token) {
                 state.username = userData.username;
                 state.userId = userData.userId;
@@ -73,8 +70,7 @@ export default new Vuex.Store({
             state.chats = chats;
         },
 
-        SOCKET_CONNECT(state, data) {
-        }
+        SOCKET_CONNECT(state, data) {}
     },
 
     actions: {
